@@ -73,5 +73,8 @@ ktlint {
     filter {
         exclude("**/generated/**")
         include("**/src/main/java/**")
+        exclude("**/build.gradle.kts")
+        exclude("**/src/androidTest/**")
+        exclude("**/src/test/**")
     }
 }
