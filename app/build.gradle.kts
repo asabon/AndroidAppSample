@@ -6,12 +6,13 @@ plugins {
 
 android {
     namespace = "net.asabon.androidappsample"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "net.asabon.androidappsample"
         minSdk = 28
-        targetSdk = 34
+        //noinspection EditedTargetSdkVersion
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -37,6 +38,7 @@ android {
     buildFeatures {
         compose = true
     }
+    buildToolsVersion = "34.0.0"
 }
 
 dependencies {
