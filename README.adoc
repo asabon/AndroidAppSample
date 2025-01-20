@@ -1,3 +1,3 @@
-[![ktlint](https://github.com/asabon/AndroidAppSample/actions/workflows/ktlint.yml/badge.svg?branch=main&event=push)](https://github.com/asabon/AndroidAppSample/actions/workflows/ktlint.yml)
+image::https://github.com/asabon/AndroidAppSample/actions/workflows/ktlint.yml/badge.svg["ktlint", link=https://github.com/asabon/AndroidAppSample/actions/workflows/ktlint.yml]
 
 = AndroidAppSample
