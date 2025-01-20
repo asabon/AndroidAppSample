@@ -5,13 +5,13 @@ on:
     branches:
       - main
     paths-ignore:
-      - README.md
+      - README.adoc
 
   pull_request:
     branches:
       - main
     paths-ignore:
-      - README.md
+      - README.adoc
 
   workflow_dispatch:
 
@@ -36,7 +36,7 @@ jobs:
 
       - name: Setup Ruby, JRuby and TruffleRuby
         if: github.event_name == 'pull_request'
-        uses: ruby/setup-ruby@v1.171.0
+        uses: ruby/setup-ruby@v1.213.0
         with:
           ruby-version: '3.3'
 
