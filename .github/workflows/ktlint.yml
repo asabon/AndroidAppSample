@@ -5,15 +5,15 @@ on:
     branches:
       - main
     paths-ignore:
-      - README.adoc
-      - LICENSE
+      - '**/README.adoc'
+      - 'LICENSE'
 
   pull_request:
     branches:
       - main
     paths-ignore:
-      - README.adoc
-      - LICENSE
+      - '**/README.adoc'
+      - 'LICENSE'
 
   workflow_dispatch:
 
