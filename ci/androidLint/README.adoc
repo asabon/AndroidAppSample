@@ -27,3 +27,14 @@ GitHub 上で以下の設定を行う。
       + Workflow permissions
         + Read and write permissions にチェックを入れる
 ....
+
+== 変更が必要な個所
+
+=== Dangerfile
+
+以下 `debug` の部分を、必要に応じて変更する。
+
+[text]
+....
+android_lint.report_file = 'app/build/reports/lint-results-debug.xml'
+....
