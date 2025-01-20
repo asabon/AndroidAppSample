@@ -6,12 +6,14 @@ on:
       - main
     paths-ignore:
       - README.adoc
+      - LICENSE
 
   pull_request:
     branches:
       - main
     paths-ignore:
       - README.adoc
+      - LICENSE
 
   workflow_dispatch:
 
