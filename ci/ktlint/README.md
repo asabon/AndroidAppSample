@@ -15,7 +15,8 @@
 
 ## 必要な設定
 
-* GitHub Actions で実行する Danger が Pull request コメントを書き込むために権限が必要。
+GitHub Actions で実行する Danger が Pull request コメントを書き込むために権限が必要。
+GitHub 上で以下の設定を行う。
 
 ```text
 + Settings
