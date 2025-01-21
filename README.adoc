@@ -1,5 +1,9 @@
+image::https://github.com/asabon/AndroidAppSample/actions/workflows/androidLint.yml/badge.svg["androidLint", link=https://github.com/asabon/AndroidAppSample/actions/workflows/androidLint.yml]
 image::https://github.com/asabon/AndroidAppSample/actions/workflows/ktlint.yml/badge.svg["ktlint", link=https://github.com/asabon/AndroidAppSample/actions/workflows/ktlint.yml]
 
-image::https://github.com/asabon/AndroidAppSample/actions/workflows/androidLint.yml/badge.svg["androidLint", link=https://github.com/asabon/AndroidAppSample/actions/workflows/androidLint.yml]
-
 = AndroidAppSample
+
+== 概要
+
+* Android アプリ開発時のテンプレート
+* なるべく最新環境を維持する
