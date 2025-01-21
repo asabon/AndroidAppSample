@@ -1,3 +1,5 @@
 image::https://github.com/asabon/AndroidAppSample/actions/workflows/ktlint.yml/badge.svg["ktlint", link=https://github.com/asabon/AndroidAppSample/actions/workflows/ktlint.yml]
 
+image::https://github.com/asabon/AndroidAppSample/actions/workflows/androidLint.yml/badge.svg["androidLint", link=https://github.com/asabon/AndroidAppSample/actions/workflows/androidLint.yml]
+
 = AndroidAppSample

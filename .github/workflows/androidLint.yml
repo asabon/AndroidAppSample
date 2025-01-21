@@ -1,4 +1,4 @@
-name: ktlint
+name: androidLint
 
 on:
   push:
@@ -34,7 +34,15 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run Inspection
-        run: ./gradlew ktlintCheck
+        run: ./gradlew lint
+
+      - name: Upload androidLint reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: androidLint-reports
+          path: |
+            app/build/reports/lint-results-*.html
+            app/build/reports/lint-results-*.xml
 
       - name: Setup Ruby, JRuby and TruffleRuby
         if: github.event_name == 'pull_request'
@@ -42,12 +50,20 @@ jobs:
         with:
           ruby-version: '3.3'
 
+      - uses: actions/cache@v4
+        if: github.event_name == 'pull_request'
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('Gemfile') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
       - uses: MeilCli/danger-action@v6
         if: github.event_name == 'pull_request'
         with:
-          plugins_file: 'ci/ktlint/Gemfile'
+          plugins_file: 'ci/androidLint/Gemfile'
           install_path: 'vendor/bundle'
-          danger_file: 'ci/ktlint/Dangerfile'
-          danger_id: 'danger-pr-ktlint'
+          danger_file: 'ci/androidLint/Dangerfile'
+          danger_id: 'danger-pr-androidLint'
         env:
           DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
