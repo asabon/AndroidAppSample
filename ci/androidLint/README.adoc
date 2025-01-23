@@ -1,3 +1,7 @@
+:toc:
+:sectnums:
+:toclevels: 3
+
 = androidLint
 
 == ファイル構成
