@@ -9,6 +9,14 @@ on:
       - '**/README.*'
       - 'LICENSE'
 
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - 'docs/**'
+      - '**/README.*'
+      - 'LICENSE'
+
   workflow_dispatch:
 
 jobs:
@@ -31,6 +39,13 @@ jobs:
       - name: Test with Coverage(Xml)
         run: ./gradlew koverXmlReportDebug
         continue-on-error: true
+
+      - run: |
+          ls
+          ls app
+          ls app/build
+          ls app/build/reports
+          ls app/build/reports/kover
 
       - name: Upload coverage reports to Codecov
         if: github.event_name == 'push'
