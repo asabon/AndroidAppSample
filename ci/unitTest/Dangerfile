@@ -1,4 +1,5 @@
-`find . | grep "TEST-*"`.split("\n").each do |path|
-    junit.parse(path)
-    junit.report
+Dir.glob("app/build/test-results/**/*.xml").each do |path|
+    junit.parse path
 end
+
+junit.report
