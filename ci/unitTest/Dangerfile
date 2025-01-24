@@ -1,0 +1,5 @@
+Dir.glob("app/build/test-results/**/*.xml").each do |path|
+    junit.parse path
+end
+
+junit.report
