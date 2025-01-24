@@ -53,14 +53,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gems-
 
-      - name: Configure Bundler path
-        if: github.event_name == 'pull_request'
-        run: bundle config set path 'vendor/bundle'
-
-      - name: Install Bundle dependencies
-        if: github.event_name == 'pull_request'
-        run: bundle install
-
       - uses: MeilCli/danger-action@v5
         if: github.event_name == 'pull_request'
         with:
