@@ -3,3 +3,4 @@
 
 = AndroidAppSample
 
+* link:ci/index.adoc[]
