@@ -72,10 +72,11 @@ ktlint {
         reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
     }
     filter {
-        // exclude("**/generated/**")
         include("**/src/main/java/**")
+        exclude("**/generated/**")
         exclude("**/build.gradle.kts")
         exclude("**/src/androidTest/**")
         exclude("**/src/test/**")
+        exclude("**/build/**")
     }
 }

@@ -1,0 +1,22 @@
+:toc:
+:toclevels: 3
+
+= ktlint
+
+== ファイル構成
+
+[text]
+....
++ .github/
+  + workflows/
+    + ...
+    + ktlint.yml
+    + ...
++ ci/
+  + ktlint/
+    + Dangerfile
+    + Gemfile
+....
+
+== 変更箇所
+
