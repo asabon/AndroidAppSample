@@ -71,8 +71,10 @@ ktlint {
     reporters {
         reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
     }
-    filter {
-        include("**/src/main/java/**")
+}
+
+tasks {
+    withType<org.jlleitschuh.gradle.ktlint.tasks.KtLintCheckTask> {
         exclude("**/src/androidTest/**")
         exclude("**/src/test/**")
         exclude("**/build/**")
