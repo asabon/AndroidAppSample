@@ -6,8 +6,8 @@ max_line_length = 100
 insert_final_newline = true
 ktlint_function_naming_ignore_when_annotated_with = Composable
 
-[app/src/test/**]
+[**/src/test/**]
 disabled_rules = ktlint
 
-[app/src/androidTest/**]
+[**/src/androidTest/**]
 disabled_rules = ktlint
