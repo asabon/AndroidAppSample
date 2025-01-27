@@ -1,4 +1,4 @@
-**/src/androidTest/**
-**/src/test/**
+**/app/src/androidTest/**
+**/app/src/test/**
 **/build/**
 **/generated/**
