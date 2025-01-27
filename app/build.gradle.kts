@@ -73,11 +73,14 @@ ktlint {
     }
 }
 
-tasks {
-    withType<org.jlleitschuh.gradle.ktlint.tasks.KtLintCheckTask> {
-        exclude("**/src/androidTest/**")
-        exclude("**/src/test/**")
-        exclude("**/build/**")
-        exclude("**/generated/**")
-    }
+tasks.withType<org.jlleitschuh.gradle.ktlint.tasks.KtLintCheckTask> {
+    dependsOn("ktlintCheck")
+    inputs.files(fileTree(mapOf("dir" to "src", "exclude" to "**/src/androidTest/**")))
+    inputs.files(fileTree(mapOf("dir" to "src", "exclude" to "**/src/test/**")))
+    inputs.files(fileTree(mapOf("dir" to "src", "exclude" to "**/build/**")))
+    inputs.files(fileTree(mapOf("dir" to "src", "exclude" to "**/generated/**")))
+    //exclude("**/src/androidTest/**")
+    //exclude("**/src/test/**")
+    //exclude("**/build/**")
+    //exclude("**/generated/**")
 }
