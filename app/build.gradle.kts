@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.kover)
-    id("org.jlleitschuh.gradle.ktlint")
+    alias(libs.plugins.kotlin.ktlint)
 }
 
 android {
@@ -73,10 +73,9 @@ ktlint {
     }
     filter {
         include("**/src/main/java/**")
-        exclude("**/generated/**")
-        exclude("**/build.gradle.kts")
         exclude("**/src/androidTest/**")
         exclude("**/src/test/**")
         exclude("**/build/**")
+        exclude("**/generated/**")
     }
 }
