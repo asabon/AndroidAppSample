@@ -71,4 +71,7 @@ ktlint {
     reporters {
         reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
     }
+    filter {
+        include("app/src/main/java/**")
+    }
 }

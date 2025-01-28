@@ -1,4 +1,4 @@
-**/app/src/androidTest/java/net/asabon/androidappsample/**
-**/app/src/test/java/net/asabon/androidappsample/**
+app/src/androidTest/**/*.kt
+app/src/test/**/*.kt
 **/build/**
 **/generated/**
