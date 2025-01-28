@@ -7,9 +7,16 @@
 
 [text]
 ....
-+ .github/
-  + workflows/
-    + coverage.yml
++ /
+  + .github/
+    + workflows/
+      + coverage.yml
+  + app/
+    + build.gradle.kts     (Module)
+  + gradle/
+    + wrapper/
+      + libs.versions.toml
+  + build.gradle.kts       (Project)
 ....
 
 == 変更箇所
@@ -29,7 +36,7 @@ kotlin-kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 ...
 ....
 
-=== Project: build.gradle.kts
+=== build.gradle.kts (Project)
 
 [text]
 ....
@@ -40,7 +47,7 @@ plugins {
 }
 ....
 
-=== Module: build.gradle.kts
+=== build.gradle.kts (Module)
 
 [text]
 ....

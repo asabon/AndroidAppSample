@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.kover)
-    id("org.jlleitschuh.gradle.ktlint")
+    alias(libs.plugins.kotlin.ktlint)
 }
 
 android {
@@ -26,7 +26,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -70,12 +70,5 @@ ktlint {
     ignoreFailures = true
     reporters {
         reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
-    }
-    filter {
-        // exclude("**/generated/**")
-        include("**/src/main/java/**")
-        exclude("**/build.gradle.kts")
-        exclude("**/src/androidTest/**")
-        exclude("**/src/test/**")
     }
 }

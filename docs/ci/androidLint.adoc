@@ -1,5 +1,4 @@
 :toc:
-:sectnums:
 :toclevels: 3
 
 = androidLint
@@ -16,20 +15,9 @@
     + androidLint/
       + Dangerfile
       + Gemfile
-....
-
-== 必要な設定
-
-GitHub Actions で実行する Danger が Pull request コメントを書き込むために権限が必要。
-GitHub 上で以下の設定を行う。
-
-[text]
-....
-+ Settings
-  + Code and automation
-    + General
-      + Workflow permissions
-        + Read and write permissions にチェックを入れる
+  + app/
+    + build.gradle.kts
+  + build.gradle.kts
 ....
 
 == 変更が必要な個所

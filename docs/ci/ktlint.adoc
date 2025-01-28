@@ -1,0 +1,120 @@
+:toc:
+:toclevels: 3
+
+= ktlint
+
+== ファイル構成
+
+[text]
+....
++ .github/
+  + workflows/
+    + ...
+    + ktlint.yml       (新規)
+    + ...
++ ci/
+  + ktlint/
+    + Dangerfile       (新規)
+    + Gemfile          (新規)
++ app/
+  + build.gradle.kts   (編集)
++ gradle/
+  + libs.versions.toml (編集)
++ build.gradle.kts     (編集)
++ .editorconfig
++ .ktlintignore        (新規)
+....
+
+== 各ファイルについて
+
+=== GitHub Actions 関連
+
+==== ktlint.yml
+
+* GitHub Actions 実行するための YAML ファイル。
+
+==== Dangerfile / Gemfile
+
+* ktlint.yml から参照する設定ファイル
+
+=== ktlint 関連
+
+==== libs.versions.toml
+
+以下を追記する。
+[text]
+....
+[versions]
+...
+ktlint = "12.1.2"
+
+[plugins]
+...
+kotlin-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint"}
+....
+
+==== build.gradle.kts (Project)
+
+以下を追記する。
+[text]
+....
+plugins {
+    ...
+    alias(libs.plugins.kotlin.ktlint) apply false
+}
+....
+
+==== build.gradle.kts (Module)
+
+以下を追記する。
+[text]
+....
+plugins {
+    ...
+    alias(libs.plugins.kotlin.ktlint)
+}
+...
+ktlint {
+    android = true
+    outputToConsole = true
+    verbose = true
+    debug = true
+    ignoreFailures = true
+    reporters {
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
+    }
+}
+....
+
+==== .ktlintignore
+
+* テストコードをチェック対象から除外するために以下の設定を記載
+
+[text]
+....
+**/src/androidTest/**
+**/src/test/**
+**/build/**
+**/generated/**
+....
+
+warning:: 現在機能していない様子・・・（調査中）
+
+==== .editorconfig
+
+* ktlint の設定
+
+[text]
+....
+[*.{kt, kts}]
+indent_size = 4
+max_line_length = 100
+insert_final_newline = true
+ktlint_code_style = android_studio
+ktlint_function_naming_ignore_when_annotated_with = Composable
+....
+
+* Android Studio では以下の 2 つのパラメータで warning が出ている
+** `ktlint_code_style = android_studio`
+** `ktlint_function_naming_ignore_when_annotated_with = Composable`
+* だが設定は効いている様子。

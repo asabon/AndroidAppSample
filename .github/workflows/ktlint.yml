@@ -35,8 +35,11 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Install dependencies
+        run: ./gradlew dependencies
+
       - name: Run Inspection
-        run: ./gradlew ktlintCheck
+        run: ./gradlew ktlintCheck --no-daemon
 
       - name: Setup Ruby, JRuby and TruffleRuby
         if: github.event_name == 'pull_request'

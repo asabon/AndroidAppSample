@@ -3,3 +3,16 @@
 
 = unitTest
 
+== ファイル構成
+
+[text]
+....
++ /
+  + .github/
+    + workflows/
+      + unitTest.yml
+  + ci/
+    + unitTest/
+      + Dangerfile
+      + Gemfile
+....
