@@ -7,3 +7,8 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+/.idea/*
+!/.idea/codeStyle
+!/.idea/inspectionProfiles
+!/.idea/dictionaries
