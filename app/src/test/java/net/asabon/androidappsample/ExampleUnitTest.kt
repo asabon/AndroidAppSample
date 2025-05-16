@@ -1,7 +1,6 @@
 package net.asabon.androidappsample
 
 import org.junit.Assert.assertEquals
-
 import org.junit.Test
 
 /**

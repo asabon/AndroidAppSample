@@ -14,7 +14,7 @@ android {
         applicationId = "net.asabon.androidappsample"
         minSdk = 28
         //noinspection EditedTargetSdkVersion
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -40,7 +40,6 @@ android {
     buildFeatures {
         compose = true
     }
-    buildToolsVersion = "34.0.0"
 }
 
 dependencies {
