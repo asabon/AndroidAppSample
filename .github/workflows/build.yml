@@ -32,10 +32,20 @@ jobs:
           java-version: '21'
           cache: gradle
 
+      - name: Restore Gradle cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            gradle-${{ runner.os }}-
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
       - name: Build with Gradle
         id: gradle-build
         run: |
-          ./gradlew build --warning-mode all --scan --info
+          ./gradlew assembleDebug --warning-mode all

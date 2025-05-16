@@ -33,11 +33,21 @@ jobs:
           java-version: '21'
           cache: gradle
 
+      - name: Restore Gradle cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            gradle-${{ runner.os }}-
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
       - name: Test with Gradle
-        run: ./gradlew test
+        run: ./gradlew testDebug
         continue-on-error: true
 
       - name: Setup Ruby, JRuby and TruffleRuby
