@@ -1,4 +1,0 @@
-app/src/androidTest/**/*.kt
-app/src/test/**/*.kt
-**/build/**
-**/generated/**

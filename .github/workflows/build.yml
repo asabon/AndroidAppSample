@@ -1,21 +1,22 @@
 name: build
 
 on:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - 'docs/**'
-      - '**/README.*'
-      - 'LICENSE'
+  #push:
+  #  branches:
+  #    - main
+  #  paths-ignore:
+  #    - '**/README.*'
 
   pull_request:
     branches:
       - main
+      - setup/base
+      - 'feature/**'
     paths-ignore:
+      - 'README.md'
+      - 'CHANGELOG.md'
+      - 'todo.md'
       - 'docs/**'
-      - '**/README.*'
-      - 'LICENSE'
 
   workflow_dispatch:
 
@@ -24,6 +25,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup JDK 21
         uses: actions/setup-java@v4
@@ -38,14 +41,59 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          key: gradle-${{ runner.os }}-${{ hashFiles(
+            'gradle.properties',
+            '**/gradle-wrapper.properties',
+            '**/*.gradle.kts',
+            '**/libs.versions.toml'
+            ) }}
           restore-keys: |
             gradle-${{ runner.os }}-
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Output dependencies
+        run: ./gradlew dependencies
+
       - name: Build with Gradle
         id: gradle-build
         run: |
-          ./gradlew assembleDebug --warning-mode all
+          ./gradlew assembleRelease --warning-mode all > build.log
+          touch warnings.txt
+          grep -Ei "warning"         build.log | grep -F -x -v -f <(grep -v -e '^##' -e '^$' ci/build/ignore.txt) >> warnings.txt || true
+          grep -Ei "unable to strip" build.log | grep -F -x -v -f <(grep -v -e '^##' -e '^$' ci/build/ignore.txt) >> warnings.txt || true
+
+      - name: Upload build.log as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build.log
+
+      - name: Setup Ruby, JRuby and TruffleRuby
+        if: github.event_name == 'pull_request'
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+
+      - name: Cache Ruby gems
+        uses: actions/cache@v4
+        if: github.event_name == 'pull_request'
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('ci/build/Gemfile') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-${{ hashFiles('ci/build/Gemfile.lock') }}
+            ${{ runner.os }}-gems-${{ hashFiles('ci/build/Gemfile') }}
+            ${{ runner.os }}-gems-
+
+      - uses: MeilCli/danger-action@v6
+        if: github.event_name == 'pull_request'
+        with:
+          plugins_file: 'ci/build/Gemfile'
+          install_path: 'vendor/bundle'
+          danger_file: 'ci/build/Dangerfile'
+          danger_id: 'danger-pr-build'
+        env:
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
