@@ -1,6 +1,12 @@
 *.iml
 .gradle
 /local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
 .DS_Store
 /build
 /captures
@@ -8,7 +14,14 @@
 .cxx
 local.properties
 
-/.idea/*
-!/.idea/codeStyle
-!/.idea/inspectionProfiles
-!/.idea/dictionaries
+# .idea/.gitignore の記載をこちらに移動
+/.idea/shelf/
+
+# 個人開発のため、これらのファイルは構成管理から除外
+/.idea/gradle.xml
+/.idea/misc.xml
+/.idea/deviceManager.xml
+/.idea/deploymentTargetSelector.xml
+/.idea/copilot.data.migration.*
+
+app/release/*

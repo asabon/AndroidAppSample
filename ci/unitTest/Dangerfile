@@ -1,5 +1,86 @@
+# ===== ユニットテスト =====
+# JUnit XML をパースして失敗を表示
 Dir.glob("app/build/test-results/**/*.xml").each do |path|
     junit.parse path
 end
 
+# テスト結果を PR コメントに表示
 junit.report
+
+if junit.failures.length == 0
+    message("✅ ユニットテストはすべて成功しました。")
+else
+    warn("❌ ユニットテストに失敗があります。")
+end
+
+# ===== カバレッジ =====
+# Kover XML をパースして coverage を表示
+require 'nokogiri'
+
+begin
+  kover_path = 'app/build/reports/kover/report.xml'
+  if File.exist?(kover_path)
+    xml = File.read(kover_path)
+    doc = Nokogiri::XML(xml)
+    counter = doc.at_xpath('//counter[@type="INSTRUCTION"]')
+
+    if counter
+      covered = counter['covered'].to_i
+      missed = counter['missed'].to_i
+      total = covered + missed
+      coverage = total > 0 ? (covered * 100.0 / total).round(2) : 0.0
+
+      markdown("🧪 **Test Coverage:** #{coverage}% (INSTRUCTION)")
+    else
+      warn("⚠️ Kover XML に INSTRUCTION カウンターが見つかりませんでした。")
+    end
+  else
+    warn("⚠️ Kover XML レポートが見つかりませんでした。")
+  end
+rescue => e
+  warn("⚠️ Kover coverage の解析中にエラーが発生しました: #{e.message}")
+end
+
+# ===== ファイル単位のカバレッジ表示 =====
+begin
+  changed_files = git.modified_files + git.added_files
+  coverage_details = []
+
+  # ===== テストファイルから main ファイルを推定 =====
+  test_files = changed_files.select { |f| f.include?("/test/") && f.end_with?("Test.kt") }
+  inferred_main_files = test_files.map do |test_path|
+    test_name = File.basename(test_path)
+    main_name = test_name.sub("Test", "")
+    test_path.sub("src/test", "src/main").sub(test_name, main_name)
+  end
+
+  # ===== coverage 対象ファイルを統合 =====
+  target_files = (changed_files + inferred_main_files).uniq
+
+  # ===== coverage XML から対象ファイルの coverage を抽出 =====
+  doc.xpath('//class').each do |klass|
+    class_name = klass['name']
+    package_name = klass.parent['name']
+    file_path = "app/src/main/java/#{package_name.gsub('.', '/')}/#{class_name}.kt"
+
+    next unless target_files.include?(file_path)
+
+    counter = klass.xpath('./counter[@type="INSTRUCTION"]').first
+    next unless counter
+
+    covered = counter['covered'].to_i
+    missed = counter['missed'].to_i
+    total = covered + missed
+    coverage = total > 0 ? (covered * 100.0 / total).round(2) : 0.0
+
+    coverage_details << "| `#{file_path}` | #{coverage}% |"
+  end
+
+  if coverage_details.any?
+    markdown("### 🧪 Coverage by Modified File\n\n| File | Coverage |\n|------|----------|\n" + coverage_details.join("\n"))
+  else
+    message("ℹ️ 変更ファイルに対応するカバレッジ情報は見つかりませんでした。")
+  end
+rescue => e
+  warn("⚠️ ファイル単位のカバレッジ解析中にエラー: #{e.message}")
+end

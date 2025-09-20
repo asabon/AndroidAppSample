@@ -1,21 +1,22 @@
 name: ktlint
 
 on:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - 'docs/**'
-      - '**/README.*'
-      - 'LICENSE'
+  #push:
+  #  branches:
+  #    - main
+  #  paths-ignore:
+  #    - '**/README.*'
 
   pull_request:
     branches:
       - main
+      - setup/base
+      - 'feature/**'
     paths-ignore:
+      - 'README.md'
+      - 'CHANGELOG.md'
+      - 'todo.md'
       - 'docs/**'
-      - '**/README.*'
-      - 'LICENSE'
 
   workflow_dispatch:
 
@@ -24,6 +25,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup JDK 21
         uses: actions/setup-java@v4
@@ -38,14 +41,19 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          key: gradle-${{ runner.os }}-${{ hashFiles(
+            'gradle.properties',
+            '**/gradle-wrapper.properties',
+            '**/*.gradle.kts',
+            '**/libs.versions.toml'
+            ) }}
           restore-keys: |
             gradle-${{ runner.os }}-
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Install dependencies
+      - name: Output dependencies
         run: ./gradlew dependencies
 
       - name: Run Inspection
@@ -53,17 +61,20 @@ jobs:
 
       - name: Setup Ruby, JRuby and TruffleRuby
         if: github.event_name == 'pull_request'
-        uses: ruby/setup-ruby@v1.213.0
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3'
+          bundler-cache: true
 
       - name: Cache Ruby gems
         uses: actions/cache@v4
         if: github.event_name == 'pull_request'
         with:
           path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('Gemfile.lock') }}
+          key: ${{ runner.os }}-gems-${{ hashFiles('ci/ktlint/Gemfile') }}
           restore-keys: |
+            ${{ runner.os }}-gems-${{ hashFiles('ci/ktlint/Gemfile.lock') }}
+            ${{ runner.os }}-gems-${{ hashFiles('ci/ktlint/Gemfile') }}
             ${{ runner.os }}-gems-
 
       - uses: MeilCli/danger-action@v6

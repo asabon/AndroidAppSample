@@ -1,4 +1,5 @@
 checkstyle_format.base_path = Dir.pwd
 Dir["*/build/reports/ktlint/*/*.xml"].each do |file|
+  puts "Reporting: #{file}"
   checkstyle_format.report file
 end
