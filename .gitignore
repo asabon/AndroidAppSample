@@ -22,3 +22,6 @@ local.properties
 /.idea/misc.xml
 /.idea/deviceManager.xml
 /.idea/deploymentTargetSelector.xml
+/.idea/copilot.data.migration.*
+
+app/release/*
