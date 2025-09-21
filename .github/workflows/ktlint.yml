@@ -1,23 +1,11 @@
 name: ktlint
 
 on:
-  #push:
-  #  branches:
-  #    - main
-  #  paths-ignore:
-  #    - '**/README.*'
-
   pull_request:
     branches:
       - main
-      - setup/base
-      - 'feature/**'
     paths-ignore:
-      - 'README.md'
-      - 'CHANGELOG.md'
-      - 'todo.md'
-      - 'docs/**'
-
+      - '**/README.*'
   workflow_dispatch:
 
 jobs:
