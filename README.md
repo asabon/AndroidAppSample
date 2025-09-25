@@ -16,6 +16,7 @@
 + ci/               # 各 CI/CD 機能ごとのディレクトリを集めた親ディレクトリ
   + androidLint/    # Android Lint を使ったコード品質チェック
   + build/          # プロジェクトのビルドチェック
+  + build-aab/      # プロジェクトのビルドと AAB ファイルの生成
   + ktlint/         # Ktlint を使ったコードスタイルチェック
   + unitTest/       # ユニットテストの実行
 ```
