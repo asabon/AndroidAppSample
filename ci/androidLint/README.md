@@ -20,6 +20,10 @@
 + buld.gradle.kts       # プロジェクト全体のビルド設定ファイル。
 ```
 
+## 設定方法
+
+1. 上記ディレクトリ構成を維持したまま、ファイル(androidLint.yml, Dangerfile, Gemfile)をコピーしてください。
+
 ## 使い方
 
-1. 上記ディレクトリ構成を維持したまま、ファイル(androidLint.yml, Dangerfile, Gemfile)をコピーして利用してください。
+1. main ブランチへのプルリクエストを作成すると、Android Lint が自動的に実行されます。

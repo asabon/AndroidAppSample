@@ -20,20 +20,17 @@
 + buld.gradle.kts       # プロジェクト全体のビルド設定ファイル。
 ```
 
-## 使い方
+## 設定方法
 
-1. 上記ディレクトリ構成を維持したまま、ファイル(ktlint.yml, Dangerfile, Gemfile)をコピーして利用してください。
-
-2. プロジェクトの `build.gradle.kts` に以下を追加します。
-
+1. 上記ディレクトリ構成を維持したまま、ファイル(ktlint.yml, Dangerfile, Gemfile)をコピーしてください。
+2. `/build.gradle.kts` に以下を追加します。
    ```kotlin
    plugins {
      // ... 省略
      id("org.jlleitschuh.gradle.ktlint") apply false
    }
    ```
-
-3. アプリの `build.gradle.kts` に以下を追加します。
+3. `/app/build.gradle.kts` に以下を追加します。
    ```kotlin
    plugins {
      // ... 省略
@@ -64,9 +61,7 @@
      }
    }
    ```
-
-4. .editorconfig ファイルに以下を追記してください。
-
+4. .editorconfig ファイルに以下を追記します。
    ```text
    [*.{kt, kts}]
    indent_size = 4
@@ -75,3 +70,15 @@
    ktlint_code_style = android_studio
    ktlint_function_naming_ignore_when_annotated_with = Composable
    ```
+
+## 使い方
+
+1. main ブランチへのプルリクエストを作成すると、Ktlint が自動的に実行されます。 
+   - ローカルで実行する場合は、以下のコマンドで実行します。
+     ```bash
+     ./gradlew ktlintCheck
+     ```
+   - また、チェックだけでなく、自動修正も行いたい場合は以下のコマンドを実行します。
+     ```bash
+     ./gradlew ktlintFormat
+     ```
