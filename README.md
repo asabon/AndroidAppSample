@@ -1,3 +1,5 @@
+[![build](https://github.com/asabon/AndroidAppSample/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/asabon/AndroidAppSample/actions/workflows/build.yml)
+
 # AndroidAppSample
 
 ## 概要
