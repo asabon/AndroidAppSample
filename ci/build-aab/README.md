@@ -15,12 +15,13 @@
 + buld.gradle.kts       # プロジェクト全体のビルド設定ファイル。
 ```
 
-## 使い方
+## 設定方法
 
 1. 上記ディレクトリ構成を維持したまま、ファイル(build-aab.yml)をコピーする。
 2. GitHub のリポジトリに対する設定で、Secrets に以下を追加する。
    - `KEYSTORE_BASE64`
      - キーストアファイルを Base64 エンコードした文字列
+     - GitHub Actions により、この文字列がデコードされて keystore.jks というファイル名で保存される。
    - `KEYSTORE_PROPERTIES`
        ```text
        storeFile=keystore.jks
@@ -29,13 +30,17 @@
        keyPassword=キーペアのパスワード
        ```
 3. アプリの `build.gradle.kts` に以下を追加する。
-
    ```kotlin
    android {
      // ... 省略
      signingConfigs {
        create("release") {
+         // keystore.properties から情報を読み込む
+         // - GitHub Actions の場合は Secrets から設定される
+         // - ローカルでビルドする場合は、プロジェクトルートに keystore.properties が配置されている前提
          val propsFile = rootProject.file("keystore.properties")
+         // 単なるビルドチェックなど、署名付き AAB を生成しない場合は keystore.properties は不要
+         // その場合は signingConfig の設定をスキップする
          if (propsFile.exists()) {
            val props =
              Properties().apply {
@@ -65,8 +70,15 @@
      }
    }
    ```
-
-4. ローカルでビルドできるように、プロジェクトルートに、 'keystore.jks' と 'keystore.properties' を配置する。
+4. ローカルでビルドできるようにする場合は、プロジェクトルートに、 'keystore.jks' と 'keystore.properties' を配置する。
    - (重要)ただし、これらのファイルは Git 管理下に置かないように、`.gitignore` に追加しておくこと。
    - キーストアファイルは Base64 エンコードする前のものを keystore.jks として配置する。
    - keystore.properties の中身は、上記 `KEYSTORE_PROPERTIES` と同じものを配置する。
+
+## 使い方
+
+1. GitHub で Release を行う際にタグを打つことができますが、
+   その際に "v1.0.0" のように "v" で始まるタグを付けてコミットをプッシュすると、
+   署名付きの AAB がビルドされて GitHub のリリースページにアップロードされます。
+   - バージョン番号は build.gradle.kts の記述に依存します。
+   - 自動的に更新はされないので、必要に応じて手動で更新してください。
