@@ -1,6 +1,0 @@
-:toc:
-:toclevels: 3
-
-= AndroidAppSample
-
-* link:ci/index.adoc[]

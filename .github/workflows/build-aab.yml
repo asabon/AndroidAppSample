@@ -1,0 +1,70 @@
+name: Build Signed AAB
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Restore Gradle cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            ~/.gradle/bin
+          key: gradle-${{ runner.os }}-${{ hashFiles(
+            'gradle.properties',
+            '**/gradle-wrapper.properties',
+            '**/*.gradle.kts',
+            '**/libs.versions.toml'
+            ) }}
+          restore-keys: |
+            gradle-${{ runner.os }}-
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Decode keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > keystore.jks
+
+      - name: Set up keystore properties
+        run: |
+          echo "${{ secrets.KEYSTORE_PROPERTIES }}" > keystore.properties
+
+      - name: Build AAB
+        run: ./gradlew bundleRelease
+
+      - name: Upload all release artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-artifacts
+          path: app/release/
+
+      - name: Install GitHub CLI
+        run: sudo apt-get install gh
+
+      - name: Upload AAB to GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          gh release upload "$TAG_NAME" \
+          app/release/app-release.aab \
+          app/release/mapping.txt \
+          app/release/native-debug-symbols.zip \
+          --repo ${{ github.repository }}
