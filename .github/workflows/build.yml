@@ -58,7 +58,7 @@ jobs:
           grep -Ei "unable to strip" build.log | grep -F -x -v -f <(grep -v -e '^##' -e '^$' ci/build/ignore.txt) >> warnings.txt || true
 
       - name: Analyze Build Log
-        uses: asabon/android-build-log-analyzer@v0.0.1
+        uses: asabon/android-build-log-analyzer@v0.0.2
         if: always()
         with:
           log-file-path: 'build.log'
