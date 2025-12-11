@@ -9,3 +9,14 @@ if File.exist?("warnings.txt")
 else
   fail("❌ `warnings.txt` が存在しません。")
 end
+
+if File.exist?("build-report.md")
+  report = File.read("build-report.md").strip
+  if report.empty?
+    message("✅ ビルドレポートは空です。")
+  else
+    markdown("### 📊 ビルドレポート\n\n#{report}")
+  end
+else
+  fail("❌ `build-report.md` が存在しません。")
+end

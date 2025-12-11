@@ -62,6 +62,7 @@ jobs:
         if: always()
         with:
           log-file-path: 'build.log'
+          report-path: 'build-report.md'
 
       - name: Upload build.log as artifact
         if: always()
