@@ -53,12 +53,9 @@ jobs:
         id: gradle-build
         run: |
           ./gradlew assembleRelease --warning-mode all > build.log
-          touch warnings.txt
-          grep -Ei "warning"         build.log | grep -F -x -v -f <(grep -v -e '^##' -e '^$' ci/build/ignore.txt) >> warnings.txt || true
-          grep -Ei "unable to strip" build.log | grep -F -x -v -f <(grep -v -e '^##' -e '^$' ci/build/ignore.txt) >> warnings.txt || true
 
       - name: Analyze Build Log
-        uses: asabon/android-build-log-analyzer@v0.0.3
+        uses: asabon/android-build-log-analyzer@v0.0.5
         if: always()
         with:
           log-file-path: 'build.log'
