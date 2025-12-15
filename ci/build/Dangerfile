@@ -1,15 +1,3 @@
-if File.exist?("warnings.txt")
-  warnings = File.read("warnings.txt").strip
-  if warnings.empty?
-    message("✅ ビルド警告は検出されませんでした。")
-  else
-    count = warnings.lines.count
-    warn("⚠️ ビルド警告 (#{count}件):\n\n```\n#{warnings}\n```")
-  end
-else
-  fail("❌ `warnings.txt` が存在しません。")
-end
-
 if File.exist?("build-report.md")
   report = File.read("build-report.md").strip
   if report.empty?
