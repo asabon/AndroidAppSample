@@ -29,10 +29,13 @@ jobs:
   execute:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Android
-        uses: ./.github/actions/setup-android
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Setup Android
+        uses: ./.github/actions/setup-android
 
       - name: Test with Gradle
         run: |

@@ -1,11 +1,7 @@
 name: 'Setup Android'
-description: 'Checkout, Setup JDK 21 and Gradle Cache'
+description: 'Setup JDK 21 and Gradle Cache'
 
 inputs:
-  fetch-depth:
-    description: 'Number of commits to fetch. 0 indicates all history for all branches and tags.'
-    required: false
-    default: '1'
   java-version:
     description: 'The Java version to set up.'
     required: false
@@ -18,11 +14,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: ${{ inputs.fetch-depth }}
-
     - name: Setup JDK
       uses: actions/setup-java@v4
       with:
