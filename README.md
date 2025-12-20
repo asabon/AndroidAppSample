@@ -1,26 +1,73 @@
-[![build](https://github.com/asabon/AndroidAppSample/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/asabon/AndroidAppSample/actions/workflows/build.yml)
+[![build](https://github.com/asabon/AndroidAppTemplate/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/asabon/AndroidAppTemplate/actions/workflows/build.yml)
 
-# AndroidAppSample
+# AndroidAppTemplate
 
 ## 概要
 
-- Android アプリ開発時の参考になる情報を集めようとしています。
-- 主に GitHub Actions を使った Android アプリ向けの CI/CD のサンプルを掲載しています。
+このリポジトリは、Android アプリ開発を開始する際の **GitHub リポジトリテンプレート** です。
+あらかじめ最適な CI/CD 環境が組み込まれており、さらに AI アシスタント（Antigravity）を利用している開発者向けの便利な設定も統合されています。
 
-## ディレクトリ・ファイル構成
+## 主な特徴
 
-```text
-+ .github/
-  + workflows/      # GitHub Actions のワークフロー定義。CI/CD の設定が含まれます。
-+ app/              # Android アプリのソースコード。
-+ ci/               # 各 CI/CD 機能ごとのディレクトリを集めた親ディレクトリ
-  + androidLint/    # Android Lint を使ったコード品質チェック
-  + build/          # プロジェクトのビルドチェック
-  + build-aab/      # プロジェクトのビルドと AAB ファイルの生成
-  + ktlint/         # Ktlint を使ったコードスタイルチェック
-  + unitTest/       # ユニットテストの実行
+- **CI/CD 標準装備**: Lint チェック、ユニットテスト、ビルドチェックが設定済み。
+- **品質管理**: Ktlint, Android Lint によるコード品質の維持が容易です。
+- **AI アシスタント対応**: Antigravity 向けの設定が同梱されており、利用する場合は AI とスムーズに連携して開発を進められます。
+
+---
+
+## クイックスタート
+
+### 1. リポジトリの作成
+GitHub の **"Use this template"** ボタンをクリックし、新しいリポジトリを作成します。
+
+### 2. 初期セットアップ
+ローカルにクローンした後、初期設定を行います。
+
+```bash
+# プロジェクト名の置換（必要に応じて）
+# app/src/main/java/ のパッケージ名などをリネーム
+./gradlew assembleDebug
 ```
 
-## 使い方
+### 3. AI アシスタントの起動（オプション）
+Antigravity を使用している場合は、以下のコマンドでコンテキストをロードすることで、このテンプレートのルールに基づいたサポートを受けられます。
 
-- 各 CI/CD 機能ごとのディレクトリ (ci/***/) 以下にある README.md を参照してください。
+- `/init`: プロジェクトルールの読み込み。
+- `/save`: 現在の作業進捗を保存。
+- `/resume`: 前回保存した状態から作業を再開。
+
+---
+
+## ディレクトリ構成
+
+```text
++ .agent/           # Antigravity (AI アシスタント) 用の設定
++ .github/
+  + workflows/      # CI/CD ワークフロー定義 (GitHub Actions)
++ app/              # Android アプリ本体
++ ci/               # CI/CD 各種ツールの詳細設定・ドキュメント
++ docs/
+  + progress/
+    + task.md       # 進捗管理（AI との共有用）
+```
+
+---
+
+## CI/CD ワークフロー詳細
+
+以下のチェックが自動で実行されます。詳細は `ci/` ディレクトリ内のドキュメントを参照してください。
+
+- **[Build](https://github.com/asabon/AndroidAppTemplate/actions/workflows/build.yml)**: リリースビルドの成否。
+- **[Ktlint](https://github.com/asabon/AndroidAppTemplate/actions/workflows/ktlint.yml)**: Kotlin のスタイルチェック。
+- **[Android Lint](https://github.com/asabon/AndroidAppTemplate/actions/workflows/androidLint.yml)**: 潜在的なバグやパフォーマンスのチェック。
+- **[Unit Test](https://github.com/asabon/AndroidAppTemplate/actions/workflows/unitTest.yml)**: ユニットテストの実行。
+
+---
+
+## カスタマイズ方法
+
+### パッケージ名の変更
+`app/build.gradle.kts` の `namespace` および `applicationId` を変更し、ソースコードのディレクトリ構造をそれに合わせて移動してください。
+
+### GitHub Secrets の設定
+自動配信（AAB生成など）を行う場合は、GitHub リポジトリの Secrets に必要なキーを登録してください。
