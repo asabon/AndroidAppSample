@@ -1,39 +1,23 @@
-# Agent Rules
+# Agent Rules (Index)
 
-## Communication
+## Core Rules
 - **Language**:
-  - You MUST strictly use **Japanese** for all responses, including thought process summaries, commit messages, and artifact content (unless specifically relevant to code or english-only contexts).
+  - You MUST strictly use **Japanese** for all responses (thoughts, messages, artifacts).
 
+## Rule Modules
+状況に応じて、以下の詳細ファイルを `view_file` で読み込み、内容を遵守してください。
 
-## Version Control (Git)
-- **Forbidden Actions**:
-  - Do NOT perform `git commit`.
-  - Do NOT perform `git push`.
-  - The user will handle all commit and push operations manually.
-- **Allowed Actions**:
-  - You MAY use `git status`, `git log`, `git diff`, and other read-only commands to check the repository state.
+- **[Git](rules/git.md)**:
+  - Git 操作の制限（コミット禁止、読み取り専用操作の許可）。
+- **[Progress](rules/progress.md)**:
+  - `docs/progress/task.md` による進捗管理ルール。
+- **[Coding](rules/coding.md)**:
+  - Kotlin/Android のコーディング規約、Jetpack Compose の利用方針。
+- **[Verification](rules/verification.md)**:
+  - 自動実行許可コマンド（SafeToAutoRun）、ビルド・Lint 等の必須検証プロセス。
 
-## Task Management
-- **Progress Tracking**:
-  - The file `docs/progress/task.md` matches the current project status.
-  - You MUST update `docs/progress/task.md` whenever:
-    - New tasks are identified.
-    - An existing task is completed.
-    - A task's status changes.
-  - This file serves as the source of truth for project progress.
-
-## Code Modifications & Verification
-- **Auto-run Verification**:
-  - You MAY run the following commands without asking for permission (`SafeToAutoRun: true`):
-    - `./gradlew assembleDebug`
-    - `./gradlew ktlintFormat`
-    - `./gradlew ktlintCheck`
-    - `./gradlew koverXmlReport`
-    - `git status`
-    - `git log`
-    - `git diff`
-- **Mandatory Verification**:
-  - After any code modification, you MUST perform the following checks before reporting completion to the user:
-    1. Run `./gradlew assembleDebug` to ensure the project builds successfully.
-    2. Run `./gradlew ktlintFormat` to ensure the code follows the ktlint style guidelines.
-  - If either of these commands fails, you MUST resolve the issues and re-run the checks until they pass.
+---
+## Guidelines
+1. 常に `docs/progress/task.md` を確認し、進捗を同期させてください。
+2. コードを変更する際は、必ず `verification.md` に記載の検証手順を実行してください。
+3. トークン節約のため、現在のタスクに関係のないルールファイルは無理に読み込む必要はありませんが、必要になったら即座に参照してください。
