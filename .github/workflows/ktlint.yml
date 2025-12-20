@@ -4,8 +4,15 @@ on:
   pull_request:
     branches:
       - main
-    paths-ignore:
-      - '**/README.*'
+    paths:
+      - '.github/actions/**'
+      - '.github/workflows/ktlint.yml'
+      - 'ci/ktlint/**'
+      - '.editorconfig'
+      - 'app/src/**'
+      - 'gradle/**'
+      - '**/*.gradle.kts'
+      - '**/gradle.properties'
   workflow_dispatch:
 
 jobs:

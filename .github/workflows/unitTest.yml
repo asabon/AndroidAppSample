@@ -4,13 +4,25 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - '**/README.*'
+    paths:
+      - '.github/actions/**'
+      - '.github/workflows/unitTest.yml'
+      - 'ci/unitTest/**'
+      - 'app/src/**'
+      - 'gradle/**'
+      - '**/*.gradle.kts'
+      - '**/gradle.properties'
   pull_request:
     branches:
       - main
-    paths-ignore:
-      - '**/README.*'
+    paths:
+      - '.github/actions/**'
+      - '.github/workflows/unitTest.yml'
+      - 'ci/unitTest/**'
+      - 'app/src/**'
+      - 'gradle/**'
+      - '**/*.gradle.kts'
+      - '**/gradle.properties'
   workflow_dispatch:
 
 jobs:
