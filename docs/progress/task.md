@@ -9,11 +9,12 @@
 - [x] AGENT.md のモジュール化と日本語化 (.agent/rules/ への分割)
 - [x] 検証ルールの詳細化 (ビルド確認と ktlintFormat の義務化)
 
-## フェーズ 2: CI/CD ワークフローの改善 [/]
-- [/] GitHub Actions の共通処理を Composite Action へ集約
-- [ ] 各 Action の `actions/cache` バージョンを v4 へアップデート
-- [ ] 自動リリースワークフロー (`release.yml`) の追加
-- [ ] Lint 自動修正またはチェック強化の検討
+## フェーズ 2: CI/CD ワークフローの改善 [x]
+- [x] 不要なキャッシュ操作の削除（重複の整理）
+- [x] GitHub Actions の共通処理を Composite Action へ集約
+- [x] 各 Action の `actions/cache` バージョンを v4 へアップデート (Composite Action 内で対応)
+- [x] (削除) 自動リリースワークフロー (`release.yml`) の追加
+- [x] (削除) Lint 自動修正またはチェック強化の検討
 
 ## 決定事項・メモ
 - **トークン節約**: `AGENT.md` をインデックス化し、必要なときのみ `rules/*.md` を読み込む構成を採用。
