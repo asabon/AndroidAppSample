@@ -1,0 +1,95 @@
+name: Bump Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      increment_type:
+        description: 'Increment type'
+        required: true
+        default: 'auto'
+        type: choice
+        options:
+          - auto
+          - major
+          - minor
+          - patch
+
+jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Bump Version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION_FILE="version.properties"
+          OLD_VERSION_NAME=$(grep "VERSION_NAME=" $VERSION_FILE | cut -d'=' -f2)
+          OLD_VERSION_CODE=$(grep "VERSION_CODE=" $VERSION_FILE | cut -d'=' -f2)
+          
+          INCREMENT_TYPE="${{ github.event.inputs.increment_type }}"
+          
+          if [ "$INCREMENT_TYPE" = "auto" ]; then
+            echo "Fetching version from Release Draft..."
+            # Get the first draft's name (which should be vX.Y.Z)
+            NEW_VERSION_NAME=$(gh release list --exclude-pre-releases | grep "Draft" | head -n 1 | awk '{print $1}' | sed 's/^v//')
+            
+            if [ -z "$NEW_VERSION_NAME" ]; then
+              echo "Error: No Release Draft found. Please create one with Release Drafter or specify major/minor/patch manually."
+              exit 1
+            fi
+            echo "Draft version found: $NEW_VERSION_NAME"
+          else
+            # Splitting version name
+            IFS='.' read -r major minor patch <<< "$OLD_VERSION_NAME"
+            
+            # Increment based on input
+            case "$INCREMENT_TYPE" in
+              major)
+                major=$((major + 1))
+                minor=0
+                patch=0
+                ;;
+              minor)
+                minor=$((minor + 1))
+                patch=0
+                ;;
+              patch)
+                patch=$((patch + 1))
+                ;;
+            esac
+            NEW_VERSION_NAME="$major.$minor.$patch"
+          fi
+          
+          NEW_VERSION_CODE=$((OLD_VERSION_CODE + 1))
+          
+          # Write back to file
+          sed -i "s/VERSION_NAME=.*/VERSION_NAME=$NEW_VERSION_NAME/" $VERSION_FILE
+          sed -i "s/VERSION_CODE=.*/VERSION_CODE=$NEW_VERSION_CODE/" $VERSION_FILE
+          
+          echo "NEW_VERSION=$NEW_VERSION_NAME" >> $GITHUB_ENV
+          echo "Updating to $NEW_VERSION_NAME ($NEW_VERSION_CODE)"
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: bump version to ${{ env.NEW_VERSION }}"
+          branch: "bump-version/${{ env.NEW_VERSION }}"
+          title: "chore: bump version to ${{ env.NEW_VERSION }}"
+          body: |
+            Release Drafter により提案されたバージョン `${{ env.NEW_VERSION }}` に更新します。
+            マージされることで `version.properties` が更新されます。
+          delete-branch: true

@@ -42,8 +42,13 @@ PR に付与された**ラベル**に応じて、次のバージョン番号が�
 
 2. **マージ (Merge)**
     - PR が `main` にマージされると、GitHub Actions が走り、**Draft Release**（下書き状態のリリース）が作成・更新されます。
-    - リリースノートにはマージされた PR のタイトルと作成者が追記されます。
+    - この時点では `version.properties` はまだ更新されません。
 
-3. **リリースの公開 (Publish)**
-    - ある程度変更が溜まったら、GitHub の "Releases" ページから生成された Draft を開き、"Publish release" をクリックして正式にリリースします。
+3. **バージョンの更新 (Bump Version)**
+    - リリース準備が整ったら、GitHub Actions タブから **"Bump Version"** ワークフローを手動実行します。
+    - `increment_type` を `auto` にすると、Draft Release の名前（`vX.Y.Z`）を自動取得して `version.properties` を更新します。
+    - ワークフローを実行すると、バージョン更新用の **Pull Request** が作成されます。内容を確認してマージしてください。
+
+4. **リリースの公開 (Publish)**
+    - GitHub の "Releases" ページから生成された Draft を開き、"Publish release" をクリックして正式にリリースします。
     - これにより `vX.Y.Z` のタグが Git に打たれます。

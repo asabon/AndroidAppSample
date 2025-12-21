@@ -14,11 +14,17 @@ android {
     compileSdk = 36
 
     defaultConfig {
+        val versionProps = java.util.Properties()
+        val versionPropsFile = project.rootProject.file("version.properties")
+        if (versionPropsFile.exists()) {
+            versionProps.load(versionPropsFile.inputStream())
+        }
+
         applicationId = "net.asabon.androidappsample"
         minSdk = 28
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = versionProps.getProperty("VERSION_CODE", "1").toInt()
+        versionName = versionProps.getProperty("VERSION_NAME", "0.1.0")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
