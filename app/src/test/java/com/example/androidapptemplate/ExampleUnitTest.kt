@@ -1,4 +1,4 @@
-package net.asabon.androidappsample
+package com.example.androidapptemplate
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

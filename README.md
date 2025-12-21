@@ -21,15 +21,27 @@
 GitHub の **"Use this template"** ボタンをクリックし、新しいリポジトリを作成します。
 
 ### 2. 初期セットアップ
-ローカルにクローンした後、初期設定を行います。
+ローカルにクローンした後、付属のスクリプトを使用してプロジェクト名とパッケージ名を一括置換します。
 
+**Windows (PowerShell):**
+```powershell
+./scripts/rename-project.ps1 -NewProjectName "MyNewApp" -NewPackageName "com.myself.myapp"
+```
+
+**Mac / Linux / Git Bash:**
 ```bash
-# プロジェクト名の置換（必要に応じて）
-# app/src/main/java/ のパッケージ名などをリネーム
+chmod +x scripts/rename-project.sh
+./scripts/rename-project.sh "MyNewApp" "com.myself.myapp"
+```
+
+実行後、Android Studio で Gradle Sync を行ってください。
+
+### 3. ビルド確認
+```bash
 ./gradlew assembleDebug
 ```
 
-### 3. AI アシスタントの起動（オプション）
+### 4. AI アシスタントの起動（オプション）
 Antigravity を使用している場合は、以下のコマンドでコンテキストをロードすることで、このテンプレートのルールに基づいたサポートを受けられます。
 
 - `/init`: プロジェクトルールの読み込み。

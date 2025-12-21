@@ -11,7 +11,7 @@ plugins {
 }
 
 android {
-    namespace = "net.asabon.androidappsample"
+    namespace = "com.example.androidapptemplate"
     compileSdk = 36
 
     defaultConfig {
@@ -21,7 +21,7 @@ android {
             versionProps.load(versionPropsFile.inputStream())
         }
 
-        applicationId = "net.asabon.androidappsample"
+        applicationId = "com.example.androidapptemplate"
         minSdk = 28
         targetSdk = 36
         versionCode = versionProps.getProperty("VERSION_CODE", "1").toInt()
