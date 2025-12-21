@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
@@ -14,7 +15,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        val versionProps = java.util.Properties()
+        val versionProps = Properties()
         val versionPropsFile = project.rootProject.file("version.properties")
         if (versionPropsFile.exists()) {
             versionProps.load(versionPropsFile.inputStream())
