@@ -5,16 +5,18 @@
   - You MUST strictly use **Japanese** for all responses (thoughts, messages, artifacts).
 
 ## Rule Modules
-状況に応じて、以下の詳細ファイルを `view_file` で読み込み、内容を遵守してください。
+必要に応じて、以下の詳細ファイルを `view_file` で読み込み、内容を遵守してください。
 
 - **[Git](rules/git.md)**:
   - Git 操作の制限（コミット禁止、読み取り専用操作の許可）。
+- **[GitHub](rules/github.md)**:
+  - GitHub 操作の制限。
 - **[Progress](rules/progress.md)**:
   - `docs/progress/task.md` による進捗管理ルール。
 - **[Coding](rules/coding.md)**:
   - Kotlin/Android のコーディング規約、Jetpack Compose の利用方針。
 - **[Verification](rules/verification.md)**:
-  - 自動実行許可コマンド（SafeToAutoRun）、ビルド・Lint 等の必須検証プロセス。
+  - ビルド・Lint 等の必須検証プロセス。
 
 ---
 ## Guidelines
