@@ -1,0 +1,26 @@
+name: 'Setup Android'
+description: 'Setup JDK 21 and Gradle Cache'
+
+inputs:
+  java-version:
+    description: 'The Java version to set up.'
+    required: false
+    default: '21'
+  java-distribution:
+    description: 'The Java distribution to set up.'
+    required: false
+    default: 'temurin'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup JDK
+      uses: actions/setup-java@v4
+      with:
+        distribution: ${{ inputs.java-distribution }}
+        java-version: ${{ inputs.java-version }}
+        cache: gradle
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+      shell: bash

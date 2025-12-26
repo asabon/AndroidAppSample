@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
@@ -10,15 +11,21 @@ plugins {
 }
 
 android {
-    namespace = "net.asabon.androidappsample"
+    namespace = "com.example.androidapptemplate"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "net.asabon.androidappsample"
+        val versionProps = Properties()
+        val versionPropsFile = project.rootProject.file("version.properties")
+        if (versionPropsFile.exists()) {
+            versionProps.load(versionPropsFile.inputStream())
+        }
+
+        applicationId = "com.example.androidapptemplate"
         minSdk = 28
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = versionProps.getProperty("VERSION_CODE", "1").toInt()
+        versionName = versionProps.getProperty("VERSION_NAME", "0.1.0")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

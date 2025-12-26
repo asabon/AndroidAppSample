@@ -4,45 +4,27 @@ on:
   pull_request:
     branches:
       - main
-    paths-ignore:
-      - '**/README.*'
+    paths:
+      - '.github/actions/**'
+      - '.github/workflows/androidLint.yml'
+      - 'ci/androidLint/**'
+      - 'app/src/**'
+      - 'gradle/**'
+      - '**/*.gradle.kts'
+      - '**/gradle.properties'
   workflow_dispatch:
 
 jobs:
   execute:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Setup JDK 21
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '21'
-          cache: gradle
-
-      - name: Restore Gradle cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles(
-            'gradle.properties',
-            '**/gradle-wrapper.properties',
-            '**/*.gradle.kts',
-            '**/libs.versions.toml'
-            ) }}
-          restore-keys: |
-            gradle-${{ runner.os }}-
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: Output dependencies
-        run: ./gradlew dependencies
+      - name: Setup Android
+        uses: ./.github/actions/setup-android
 
       - name: Run Inspection
         run: ./gradlew lint --no-daemon
