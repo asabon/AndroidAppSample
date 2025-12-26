@@ -39,3 +39,4 @@
 
 ## フェーズ 5: ルールのブラッシュアップ [x]
 - [x] Git 操作ルールの見直し（読み取り専用コマンドの自動実行許可）[#74](https://github.com/asabon/AndroidAppTemplate/issues/74)
+- [x] GitHub 操作ルールの導入とワークフローの強化（テンプレート活用）
