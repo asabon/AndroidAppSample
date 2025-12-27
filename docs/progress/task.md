@@ -54,3 +54,4 @@
 ## フェーズ 6: 運用支援ツールの拡充 [x]
 - [x] Release Drafter 用 GitHub Labels セットアップスクリプトの作成 (.sh, .ps1) [#80](https://github.com/asabon/AndroidAppTemplate/issues/80)
 - [x] セッション完了フロー（task.md更新タイミング、ブランチ削除）の最適化 [#82](https://github.com/asabon/AndroidAppTemplate/issues/82)
+- [x] `/save` ワークフローへの「栞（Checkpoint）」機能の導入 [#84](https://github.com/asabon/AndroidAppTemplate/issues/84)
