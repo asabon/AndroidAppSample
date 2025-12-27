@@ -19,7 +19,11 @@
 
 ## 決定事項・メモ
 - **トークン節約**: `AGENT.md` をインデックス化し、必要なときのみ `rules/*.md` を読み込む構成を採用。
-- **検証フロー**: エージェントは完了報告前に `./gradlew assembleDebug` と `./gradlew ktlintFormat` を実行することを必須ルールとした。
+- **検証フロー**: 作業完了報告前に `./gradlew assembleDebug` と `./gradlew ktlintFormat` を実行することを必須ルールとし、`coding.md` に集約。
+- **タスク・Issue ライフサイクル**:
+    - 要望受領時の `task.md` 更新、Issue 起票、`gh issue develop` によるブランチ作成、`git fetch/checkout` の順序を厳守。
+    - 完了時はユーザーによる `push` 確認を経て、エージェントが PR を作成し、ユーザーがマージするフローを確立。
+    - エージェントは「ナビゲーター」として、常にユーザーに次のステップを指示する。
 - **Git 操作**: 破壊的操作（commit, push）はエージェントには禁止し、読み取り操作のみを許可。
 - **CI/CD トリガー**: 
     - `paths` によるホワイトリスト形式を採用。
@@ -44,3 +48,5 @@
 ## フェーズ 5: ルールのブラッシュアップ [x]
 - [x] Git 操作ルールの見直し（読み取り専用コマンドの自動実行許可）[#74](https://github.com/asabon/AndroidAppTemplate/issues/74)
 - [x] GitHub 操作ルールの導入とワークフローの強化（テンプレート活用）
+- [x] 検証ルールの `coding.md` への統合と視認性向上
+- [x] タスク・Issue管理フローの再定義 (`task_management.md`) とブランチ・PR運用の明文化
