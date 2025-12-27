@@ -25,6 +25,10 @@
     - `paths` によるホワイトリスト形式を採用。
     - パス指定を（1.ワークフロー 2.ソースコード 3.Gradle関連）の順で論理的にグループ化。
     - `ktlint` のトリガーには実在する `.editorconfig` を含め、`androidLint` からは存在しない `lint.xml` を除外。
+- **GitHub 連携ワークフロー**:
+    - `/issue_new` (Issue 起票), `/issue_comment` (コメント追記・本文更新) を導入し、テンプレート (`.github/ISSUE_TEMPLATE/task.md`) を活用した Issue 駆動開発を強化。
+- **ディレクトリ権限**:
+    - `.agent/rules/` は書き込み制限があるが、`.agent/workflows/` はエージェントによる直接編集が可能であることを確認。
 
 ## フェーズ 3: 仕上げと検証 [x]
 - [x] 全ワークフローの動作確認（ユーザーによる最終検証完了）
