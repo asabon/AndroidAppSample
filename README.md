@@ -83,12 +83,18 @@ Antigravity を使用している場合は、以下のフローで役割を分�
 
 ## CI/CD ワークフロー詳細
 
-以下のチェックが自動で実行されます。詳細は `ci/` ディレクトリ内のドキュメントを参照してください。
+以下のワークフローが自動で実行され、プロジェクトの品質維持とリリースフローを支えます。
 
-- **[Build](https://github.com/asabon/AndroidAppTemplate/actions/workflows/build.yml)**: リリースビルドの成否。
-- **[Ktlint](https://github.com/asabon/AndroidAppTemplate/actions/workflows/ktlint.yml)**: Kotlin のスタイルチェック。
-- **[Android Lint](https://github.com/asabon/AndroidAppTemplate/actions/workflows/androidLint.yml)**: 潜在的なバグやパフォーマンスのチェック。
-- **[Unit Test](https://github.com/asabon/AndroidAppTemplate/actions/workflows/unitTest.yml)**: ユニットテストの実行。
+### 品質管理・検証（Pull Request / Push 時）
+- **[Build](https://github.com/asabon/AndroidAppTemplate/actions/workflows/build.yml)**: `assembleRelease` のビルド確認。PR 時には Danger による自動報告を行います。
+- **[Unit Test](https://github.com/asabon/AndroidAppTemplate/actions/workflows/unitTest.yml)**: ユニットテストの実行。テストレポートとカバレッジ（Kover）を生成します。
+- **[Ktlint](https://github.com/asabon/AndroidAppTemplate/actions/workflows/ktlint.yml)**: Kotlin のコーディング規約（Ktlint）のチェックを行います。
+- **[Android Lint](https://github.com/asabon/AndroidAppTemplate/actions/workflows/androidLint.yml)**: Android 特有のコード品質や潜在的なバグ（Android Lint）をチェックします。
+
+### リリースプロセス
+- **[Release Drafter](https://github.com/asabon/AndroidAppTemplate/actions/workflows/release-drafter.yml)**: マージされた PR のラベルに基づき、リリースノートのドラフトを自動生成します。
+- **[Bump Version](https://github.com/asabon/AndroidAppTemplate/actions/workflows/bump-version.yml)**: ドラフトされたバージョンを `version.properties` に反映するための PR を作成します。
+- **[Build Signed AAB](https://github.com/asabon/AndroidAppTemplate/actions/workflows/build-aab.yml)**: `v*` タグの Push 時に、署名済み AAB をビルドし、GitHub Release へ自動アップロードします。
 
 ---
 
