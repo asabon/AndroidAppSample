@@ -51,5 +51,6 @@
 - [x] 検証ルールの `coding.md` への統合と視認性向上
 - [x] タスク・Issue管理フローの再定義 (`task_management.md`) とブランチ・PR運用の明文化 [#78](https://github.com/asabon/AndroidAppTemplate/issues/78)
 
-## フェーズ 6: 運用支援ツールの拡充 [/]
+## フェーズ 6: 運用支援ツールの拡充 [x]
 - [x] Release Drafter 用 GitHub Labels セットアップスクリプトの作成 (.sh, .ps1) [#80](https://github.com/asabon/AndroidAppTemplate/issues/80)
+- [x] セッション完了フロー（task.md更新タイミング、ブランチ削除）の最適化 [#82](https://github.com/asabon/AndroidAppTemplate/issues/82)
