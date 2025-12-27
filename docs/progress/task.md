@@ -49,4 +49,7 @@
 - [x] Git 操作ルールの見直し（読み取り専用コマンドの自動実行許可）[#74](https://github.com/asabon/AndroidAppTemplate/issues/74)
 - [x] GitHub 操作ルールの導入とワークフローの強化（テンプレート活用）
 - [x] 検証ルールの `coding.md` への統合と視認性向上
-- [x] タスク・Issue管理フローの再定義 (`task_management.md`) とブランチ・PR運用の明文化
+- [x] タスク・Issue管理フローの再定義 (`task_management.md`) とブランチ・PR運用の明文化 [#78](https://github.com/asabon/AndroidAppTemplate/issues/78)
+
+## フェーズ 6: 運用支援ツールの拡充 [/]
+- [x] Release Drafter 用 GitHub Labels セットアップスクリプトの作成 (.sh, .ps1) [#80](https://github.com/asabon/AndroidAppTemplate/issues/80)

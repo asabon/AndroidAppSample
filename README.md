@@ -36,12 +36,24 @@ chmod +x scripts/rename-project.sh
 
 実行後、Android Studio で Gradle Sync を行ってください。
 
-### 3. ビルド確認
+### 3. GitHub ラベルのセットアップ (推奨)
+Release Drafter が正しく動作するために必要なラベル（major, minor, patch 等）を一括登録します。
+
+```bash
+# Bash (macOS/Linux)
+chmod +x scripts/setup-labels.sh
+./scripts/setup-labels.sh
+
+# PowerShell (Windows)
+./scripts/setup-labels.ps1
+```
+
+### 4. ビルド確認
 ```bash
 ./gradlew assembleDebug
 ```
 
-### 4. アシスタントとの開発サイクル（推奨）
+### 5. アシスタントとの開発サイクル（推奨）
 Antigravity を使用している場合は、以下のフローで役割を分担しながら開発を進めることを推奨します。
 
 | ステップ | アクション | 担当 | 備考 |
