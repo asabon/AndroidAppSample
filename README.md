@@ -41,38 +41,60 @@ chmod +x scripts/rename-project.sh
 ./gradlew assembleDebug
 ```
 
-### 4. AI アシスタントの起動（オプション）
-Antigravity を使用している場合は、以下のコマンドでコンテキストをロードすることで、このテンプレートのルールに基づいたサポートを受けられます。
+### 4. アシスタントとの開発サイクル（推奨）
+Antigravity を使用している場合は、以下のフローで役割を分担しながら開発を進めることを推奨します。
 
-- `/init`: プロジェクトルールの読み込み。
-- `/save`: 現在の作業進捗を保存。
-- `/resume`: 前回保存した状態から作業を再開。
+| ステップ | アクション | 担当 | 備考 |
+| :--- | :--- | :--- | :--- |
+| **1. 開始** | `/init` または `/resume` を実行 | **ユーザー** | 初回は `/init`、2回目以降は `/resume` |
+| **2. 計画** | 要望を伝えて `task.md` と Issue を作成 | ユーザー / **AI** | `/issue_new` 相当 |
+| **3. 準備** | 作業用ブランチ（`[Issue番号]-名前`）を作成しチェックアウト | **AI** | `gh issue develop` |
+| **4. 実装** | 実装と検証（ビルド・Lint）を行う | **AI** | `coding.md` 遵守 |
+| **5. 報告** | `/save` して進捗を保存し、完了を報告 | **AI** | |
+| **6. 確認** | 内容を確認し **コミット・プッシュ** | **ユーザー** | |
+| **7. 完了** | **AI** が PR を作成。承認後に **main** へマージ | AI / **ユーザー** | |
+
+- **ユーザーが直接使用するコマンド**:
+  - `/init`: プロジェクトルールの初回読み込み。
+  - `/resume`: 前回の続きから作業を再開。
+- **アシスタントが管理するワークフロー**:
+  - `/save`: 進捗の保存（完了報告時などに AI が自動実行しますが、ユーザーが手動で保存を指示することも可能です）。
+  - `/issue_new` / `/issue_comment`: GitHub Issue の起票や更新。
+  - その他 `gh` コマンド等、タスク遂行に必要な操作は AI が自動で判断・実行します。
 
 ---
 
 ## ディレクトリ構成
 
 ```text
-+ .agent/           # Antigravity (AI アシスタント) 用の設定
++ .agent/
+  + rules/          # 開発、Git、GitHub、タスク管理の詳細ルール
+  + workflows/      # AI アシスタント用コマンド（/init, /save 等）
 + .github/
   + workflows/      # CI/CD ワークフロー定義 (GitHub Actions)
 + app/              # Android アプリ本体
 + ci/               # CI/CD 各種ツールの詳細設定・ドキュメント
 + docs/
   + progress/
-    + task.md       # 進捗管理（AI との共有用）
+    + task.md       # 進捗管理（唯一の真実：Source of Truth）
 ```
 
 ---
 
 ## CI/CD ワークフロー詳細
 
-以下のチェックが自動で実行されます。詳細は `ci/` ディレクトリ内のドキュメントを参照してください。
+以下のワークフローが自動で実行され、プロジェクトの品質維持とリリースフローを支えます。
 
-- **[Build](https://github.com/asabon/AndroidAppTemplate/actions/workflows/build.yml)**: リリースビルドの成否。
-- **[Ktlint](https://github.com/asabon/AndroidAppTemplate/actions/workflows/ktlint.yml)**: Kotlin のスタイルチェック。
-- **[Android Lint](https://github.com/asabon/AndroidAppTemplate/actions/workflows/androidLint.yml)**: 潜在的なバグやパフォーマンスのチェック。
-- **[Unit Test](https://github.com/asabon/AndroidAppTemplate/actions/workflows/unitTest.yml)**: ユニットテストの実行。
+### 品質管理・検証（Pull Request / Push 時）
+- **[Build](https://github.com/asabon/AndroidAppTemplate/actions/workflows/build.yml)**: `assembleRelease` のビルド確認。PR 時には Danger による自動報告を行います。
+- **[Unit Test](https://github.com/asabon/AndroidAppTemplate/actions/workflows/unitTest.yml)**: ユニットテストの実行。テストレポートとカバレッジ（Kover）を生成します。
+- **[Ktlint](https://github.com/asabon/AndroidAppTemplate/actions/workflows/ktlint.yml)**: Kotlin のコーディング規約（Ktlint）のチェックを行います。
+- **[Android Lint](https://github.com/asabon/AndroidAppTemplate/actions/workflows/androidLint.yml)**: Android 特有のコード品質や潜在的なバグ（Android Lint）をチェックします。
+
+### リリースプロセス
+- **[Release Drafter](https://github.com/asabon/AndroidAppTemplate/actions/workflows/release-drafter.yml)**: マージされた PR のラベルに基づき、リリースノートのドラフトを自動生成します。
+- **[Bump Version](https://github.com/asabon/AndroidAppTemplate/actions/workflows/bump-version.yml)**: ドラフトされたバージョンを `version.properties` に反映するための PR を作成します。
+- **[Build Signed AAB](https://github.com/asabon/AndroidAppTemplate/actions/workflows/build-aab.yml)**: `v*` タグの Push 時に、署名済み AAB をビルドし、GitHub Release へ自動アップロードします。
 
 ---
 
