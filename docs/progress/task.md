@@ -50,7 +50,7 @@
 - [x] GitHub 操作ルールの導入とワークフローの強化（テンプレート活用）
 - [x] 検証ルールの `coding.md` への統合と視認性向上
 - [x] フィードバックサイクルの最適化
-- [/] Git/GitHub 操作ルールの更新（読み取り専用コマンドの自動実行許可） [#86](https://github.com/asabon/AndroidAppTemplate/issues/86)
+- [x] Git/GitHub 操作ルールの更新（読み取り専用コマンドの自動実行許可） [#86](https://github.com/asabon/AndroidAppTemplate/issues/86)
 
 ## フェーズ 6: 運用支援ツールの拡充 [x]
 - [x] Release Drafter 用 GitHub Labels セットアップスクリプトの作成 (.sh, .ps1) [#80](https://github.com/asabon/AndroidAppTemplate/issues/80)
@@ -61,6 +61,4 @@
     - 状況: 実装完了、Step 6（プッシュ待ち）。
     - 具体的次の一手: ユーザー様のプッシュを待ち、確認後に \/complete\ で PR 作成 (Step 7) を行う。
 
-- **Checkpoint: 2025-12-28 (作業中)**
-    - 状況: Issue #86 を起票し、ブランチ `86-update-git-github-rules` で作業中。`git.md`, `github.md` は既に変更済み（未コミット）。
-    - 具体的次の一手: 変更内容をコミットし、PRを作成する。
+
