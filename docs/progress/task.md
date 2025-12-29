@@ -57,8 +57,11 @@
 - [x] セッション完了フロー（task.md更新タイミング、ブランチ削除）の最適化 [#82](https://github.com/asabon/AndroidAppTemplate/issues/82)
 - [x] `/save` ワークフローへの「栞（Checkpoint）」機能の導入 [#84](https://github.com/asabon/AndroidAppTemplate/issues/84)
 
-- **Checkpoint: 2025-12-27 (中断)**
-    - 状況: 実装完了、Step 6（プッシュ待ち）。
-    - 具体的次の一手: ユーザー様のプッシュを待ち、確認後に \/complete\ で PR 作成 (Step 7) を行う。
+- **Checkpoint: 2025-12-28 (完了)**
+    - 状況: Issue #86 (Git/GitHub操作ルールの更新) を完了し、PR #87 をマージしました。タスク進捗ファイル (`task.md`) 上の全フェーズは完了状態です。
+    - 具体的次の一手: 新しい改善要望または機能開発の指示待ち。
+
+## フェーズ 7: ユーザビリティ向上 [/]
+- [x] テンプレート説明用 README の分離 (README.md -> docs/TEMPLATE_USAGE.md)
 
 
